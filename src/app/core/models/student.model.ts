@@ -33,6 +33,6 @@ export interface Student {
 
 //  TYPES UTILITAIRES
 
-export type StudentFormDate = Omit<Student, 'id'>; // Type pour les formulaires, sans l'id qui est généré automatiquement
+export type StudentFormData = Omit<Student, 'id'>; // Type pour les formulaires, sans l'id qui est généré automatiquement
 
 export type StudentSummary = Pick<Student, 'id' | 'matricule' | 'nom' | 'prenoms' | 'niveau' | 'sexe'>; // Type pour les listes, avec seulement les champs essentiels
