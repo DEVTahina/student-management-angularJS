@@ -1,0 +1,216 @@
+<!-- ============================================================
+     EN-TÊTE DE PAGE
+     ============================================================ -->
+<div class="page-header">
+  <button mat-icon-button (click)="onCancel()" matTooltip="Retour à la liste">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div>
+    <h1 class="page-title">
+      <mat-icon>{{ isEditMode ? 'edit' : 'person_add' }}</mat-icon>
+      {{ isEditMode ? 'Modifier l\'Étudiant' : 'Ajouter un Étudiant' }}
+    </h1>
+    <p class="page-subtitle">
+      {{ isEditMode
+          ? 'Modifiez les informations ci-dessous puis enregistrez.'
+          : 'Remplissez les informations pour créer un nouvel étudiant.' }}
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================
+     CARTE FORMULAIRE
+     ============================================================ -->
+<mat-card class="form-card">
+
+  <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" novalidate>
+
+    <!-- ========================================================
+         SECTION 1 — Identification
+         ======================================================== -->
+    <div class="section-title">
+      <mat-icon>badge</mat-icon>
+      Identification
+    </div>
+
+    <div class="form-grid">
+
+      <!-- Matricule -->
+      <mat-form-field appearance="outline">
+        <mat-label>Matricule *</mat-label>
+        <input matInput
+               formControlName="matricule"
+               placeholder="Ex : ETU2024001"
+               [class.readonly-field]="isEditMode">
+        <mat-icon matSuffix>fingerprint</mat-icon>
+        <mat-hint *ngIf="!isEditMode">Lettres majuscules et chiffres uniquement</mat-hint>
+        <mat-hint *ngIf="isEditMode" class="readonly-hint">Non modifiable</mat-hint>
+        <mat-error>{{ getError('matricule') }}</mat-error>
+      </mat-form-field>
+
+      <!-- Niveau -->
+      <mat-form-field appearance="outline">
+        <mat-label>Niveau *</mat-label>
+        <mat-select formControlName="niveau">
+          <mat-option *ngFor="let n of niveauOptions" [value]="n">
+            {{ n }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>school</mat-icon>
+        <mat-error>{{ getError('niveau') }}</mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <mat-divider class="section-divider"></mat-divider>
+
+    <!-- ========================================================
+         SECTION 2 — État civil
+         ======================================================== -->
+    <div class="section-title">
+      <mat-icon>person</mat-icon>
+      État civil
+    </div>
+
+    <div class="form-grid">
+
+      <!-- Nom -->
+      <mat-form-field appearance="outline">
+        <mat-label>Nom *</mat-label>
+        <input matInput
+               formControlName="nom"
+               placeholder="Nom de famille">
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error>{{ getError('nom') }}</mat-error>
+      </mat-form-field>
+
+      <!-- Prénoms -->
+      <mat-form-field appearance="outline">
+        <mat-label>Prénoms *</mat-label>
+        <input matInput
+               formControlName="prenoms"
+               placeholder="Prénoms">
+        <mat-icon matSuffix>person_outline</mat-icon>
+        <mat-error>{{ getError('prenoms') }}</mat-error>
+      </mat-form-field>
+
+      <!-- Date de naissance -->
+      <mat-form-field appearance="outline">
+        <mat-label>Date de naissance *</mat-label>
+        <input matInput
+               [matDatepicker]="picker"
+               formControlName="dateNaissance"
+               [max]="maxDate"
+               [min]="minDate"
+               placeholder="JJ/MM/AAAA"
+               readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+        <mat-error>{{ getError('dateNaissance') }}</mat-error>
+      </mat-form-field>
+
+      <!-- Sexe -->
+      <mat-form-field appearance="outline">
+        <mat-label>Sexe *</mat-label>
+        <mat-select formControlName="sexe">
+          <mat-option *ngFor="let s of sexeOptions" [value]="s">
+            {{ s }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>wc</mat-icon>
+        <mat-error>{{ getError('sexe') }}</mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <mat-divider class="section-divider"></mat-divider>
+
+    <!-- ========================================================
+         SECTION 3 — Coordonnées
+         ======================================================== -->
+    <div class="section-title">
+      <mat-icon>contacts</mat-icon>
+      Coordonnées
+    </div>
+
+    <div class="form-grid">
+
+      <!-- Téléphone -->
+      <mat-form-field appearance="outline">
+        <mat-label>Téléphone *</mat-label>
+        <input matInput
+               formControlName="telephone"
+               placeholder="+261 34 XX XXX XX"
+               type="tel">
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-error>{{ getError('telephone') }}</mat-error>
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline">
+        <mat-label>Email *</mat-label>
+        <input matInput
+               formControlName="email"
+               placeholder="etudiant@exemple.mg"
+               type="email">
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error>{{ getError('email') }}</mat-error>
+      </mat-form-field>
+
+      <!-- Adresse — pleine largeur -->
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Adresse *</mat-label>
+        <textarea matInput
+                  formControlName="adresse"
+                  placeholder="Rue, quartier, ville…"
+                  rows="3"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="2"
+                  cdkAutosizeMaxRows="5">
+        </textarea>
+        <mat-icon matSuffix>location_on</mat-icon>
+        <mat-error>{{ getError('adresse') }}</mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <mat-divider class="section-divider"></mat-divider>
+
+    <!-- ========================================================
+         ACTIONS
+         ======================================================== -->
+    <div class="form-actions">
+
+      <button mat-stroked-button
+              type="button"
+              (click)="onCancel()"
+              [disabled]="isSubmitting">
+        <mat-icon>cancel</mat-icon>
+        Annuler
+      </button>
+
+      <button mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="isSubmitting">
+
+        <!-- Spinner pendant la soumission -->
+        <mat-spinner *ngIf="isSubmitting"
+                     diameter="18"
+                     class="btn-spinner">
+        </mat-spinner>
+
+        <mat-icon *ngIf="!isSubmitting">
+          {{ isEditMode ? 'save' : 'person_add' }}
+        </mat-icon>
+
+        {{ isSubmitting
+            ? 'Enregistrement…'
+            : isEditMode ? 'Enregistrer les modifications' : 'Ajouter l\'étudiant' }}
+
+      </button>
+
+    </div>
+
+  </form>
+</mat-card>
