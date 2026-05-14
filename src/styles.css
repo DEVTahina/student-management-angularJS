@@ -1,1 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin    : 0;
+  padding   : 0;
+}
+
+html,
+body {
+  height     : 100%;
+  font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size  : 14px;
+  color      : #212121;
+  background : #f0f2f5;
+}
+
+/* ============================================================
+   SNACKBAR PERSONNALISÉES
+   ============================================================ */
+
+/* Succès  (vert) */
+.snack-success .mdc-snackbar__surface {
+  background-color: #2e7d32 !important;
+  color           : #ffffff !important;
+}
+
+.snack-success .mat-mdc-snack-bar-action {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Erreur  (rouge) */
+.snack-error .mdc-snackbar__surface {
+  background-color: #c62828 !important;
+  color           : #ffffff !important;
+}
+
+.snack-error .mat-mdc-snack-bar-action {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ============================================================
+   CORRECTIONS MATERIAL GLOBALES
+   ============================================================ */
+
+/* Scrollbar plus discrète */
+::-webkit-scrollbar {
+  width : 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background   : rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Table header sticky : ombre pour indiquer le scroll */
+.mat-mdc-table .mat-mdc-header-row {
+  position: sticky;
+  top     : 0;
+  z-index : 10;
+}
+
+/* Cards sans padding parasite */
+.mat-mdc-card-content:first-child {
+  padding-top: 0;
+}
