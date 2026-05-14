@@ -1,0 +1,127 @@
+/* ============================================================
+   CONTENEUR GLOBAL
+   ============================================================ */
+.app-container {
+  height: 100vh;
+}
+ 
+/* ============================================================
+   SIDENAV
+   ============================================================ */
+.app-sidenav {
+  width: 240px;
+  background-color: #1a237e;   /* Indigo 900 */
+  color: #ffffff;
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.6, 1);
+  overflow: hidden;
+}
+ 
+.app-sidenav.collapsed {
+  width: 64px;
+}
+ 
+/* En-tête logo */
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: 64px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+ 
+.logo-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+ 
+.app-name {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+}
+ 
+/* Divider adapté à la couleur sombre */
+.app-sidenav mat-divider {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+ 
+/* ============================================================
+   NAVIGATION ITEMS
+   ============================================================ */
+.nav-list {
+  padding-top: 8px;
+}
+ 
+.nav-item {
+  margin: 4px 8px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.78);
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+ 
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+ 
+.nav-item--active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+ 
+/* Icône dans la liste */
+.nav-item mat-icon {
+  color: inherit;
+}
+ 
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+ 
+.toolbar-title {
+  margin-left: 12px;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+ 
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+ 
+.user-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.9;
+}
+ 
+/* ============================================================
+   ZONE DE CONTENU DES PAGES
+   ============================================================ */
+.app-content {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5;
+}
+ 
+.page-content {
+  flex: 1;
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+  overflow-y: auto;
+}

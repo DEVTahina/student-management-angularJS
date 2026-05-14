@@ -1,0 +1,75 @@
+<!-- ============================================================
+     CONTENEUR PRINCIPAL sidenav + contenu
+     ============================================================ -->
+<mat-sidenav-container class="app-container">
+ 
+  <!-- =========================================================
+       SIDENAV (navigation latérale)
+       ========================================================= -->
+  <mat-sidenav #sidenav
+               mode="side"
+               opened
+               class="app-sidenav"
+               [class.collapsed]="!isExpanded()">
+ 
+    <!-- En-tête logo -->
+    <div class="sidenav-header">
+      <mat-icon class="logo-icon">school</mat-icon>
+      <span class="app-name" *ngIf="isExpanded()">Manage Student</span>
+    </div>
+ 
+    <mat-divider></mat-divider>
+ 
+    <!-- Items de navigation -->
+    <mat-nav-list class="nav-list">
+      <mat-list-item
+        *ngFor="let item of navItems"
+        class="nav-item"
+        [routerLink]="item.route"
+        routerLinkActive="nav-item--active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        [matTooltip]="isExpanded() ? '' : item.label"
+        matTooltipPosition="right">
+ 
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        <span matListItemTitle *ngIf="isExpanded()">{{ item.label }}</span>
+ 
+      </mat-list-item>
+    </mat-nav-list>
+ 
+  </mat-sidenav>
+ 
+  <!-- =========================================================
+       CONTENU PRINCIPAL (toolbar + router-outlet)
+       ========================================================= -->
+  <mat-sidenav-content class="app-content">
+ 
+    <!-- Barre de navigation supérieure -->
+    <mat-toolbar color="primary" class="app-toolbar">
+ 
+      <!-- Bouton collapse/expand sidenav -->
+      <button mat-icon-button
+              (click)="toggleSidenav()"
+              matTooltip="Réduire / Agrandir">
+        <mat-icon>{{ isExpanded() ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+ 
+      <!-- Titre -->
+      <span class="toolbar-title">Gestion des Étudiants</span>
+ 
+      <!-- Espace flexible -->
+      <span class="toolbar-spacer"></span>
+ 
+      <!-- Icône utilisateur -->
+      <mat-icon class="user-icon">account_circle</mat-icon>
+ 
+    </mat-toolbar>
+ 
+    <!-- Zone de rendu des pages -->
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
+ 
+  </mat-sidenav-content>
+ 
+</mat-sidenav-container>
