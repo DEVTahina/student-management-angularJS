@@ -1,0 +1,200 @@
+/* ============================================================
+   EN-TÊTE DE PAGE
+   ============================================================ */
+.page-header {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+  margin-bottom  : 20px;
+}
+
+.page-header__info {
+  display    : flex;
+  align-items: center;
+  gap        : 16px;
+}
+
+.page-header__title {
+  display    : flex;
+  align-items: center;
+  gap        : 8px;
+  font-size  : 22px;
+  font-weight: 600;
+  color      : #1a237e;
+  margin     : 0;
+}
+
+.page-header__title mat-icon {
+  font-size: 26px;
+  width    : 26px;
+  height   : 26px;
+}
+
+.page-header__count {
+  font-size  : 13px;
+  color      : #666;
+  font-weight: 500;
+  padding-right: 12px;  /* espace pour le badge */
+}
+
+/* ============================================================
+   CARTE PRINCIPALE
+   ============================================================ */
+.list-card {
+  border-radius: 12px !important;
+  box-shadow   : 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+  overflow     : hidden;
+}
+
+/* ============================================================
+   BARRE D'OUTILS (filtre + bouton)
+   ============================================================ */
+.list-toolbar {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+  gap            : 16px;
+  padding        : 16px 16px 8px;
+  flex-wrap      : wrap;
+}
+
+.search-field {
+  flex    : 1;
+  min-width: 240px;
+  max-width: 420px;
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.students-table {
+  width: 100%;
+}
+
+/* En-têtes */
+.students-table th.mat-mdc-header-cell {
+  background-color: #1a237e;
+  color           : #ffffff;
+  font-weight     : 600;
+  font-size       : 13px;
+  white-space     : nowrap;
+}
+
+/* Icône de tri en blanc */
+.students-table th .mat-sort-header-arrow {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Lignes */
+.student-row {
+  transition: background-color 0.15s ease;
+  cursor    : default;
+}
+
+.student-row:hover {
+  background-color: rgba(26, 35, 126, 0.04);
+}
+
+/* Colonne actions : collée à droite */
+.actions-header,
+.actions-cell {
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+.actions-cell {
+  background-color: #fafafa;
+}
+
+/* ============================================================
+   CHIPS / BADGES
+   ============================================================ */
+.chip {
+  display      : inline-block;
+  padding      : 3px 10px;
+  border-radius: 12px;
+  font-size    : 12px;
+  font-weight  : 500;
+  white-space  : nowrap;
+}
+
+.chip--primary {
+  background-color: #e8eaf6;
+  color           : #1a237e;
+  font-family     : monospace;
+  letter-spacing  : 0.5px;
+}
+
+.chip--niveau {
+  color     : #333;
+  font-size : 11px;
+}
+
+/* ============================================================
+   CELLULES SPÉCIALES
+   ============================================================ */
+.date-cell,
+.phone-cell {
+  display    : flex;
+  align-items: center;
+  gap        : 4px;
+  white-space: nowrap;
+}
+
+.date-icon,
+.phone-icon {
+  font-size: 15px !important;
+  width    : 15px !important;
+  height   : 15px !important;
+  color    : #9e9e9e;
+}
+
+.email-link {
+  color          : #1565C0;
+  text-decoration: none;
+  font-size      : 13px;
+}
+
+.email-link:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   ÉTAT VIDE (no data row)
+   ============================================================ */
+.empty-state {
+  text-align    : center;
+  padding       : 60px 24px !important;
+  color         : #9e9e9e;
+}
+
+.empty-state mat-icon {
+  font-size: 56px;
+  width    : 56px;
+  height   : 56px;
+  display  : block;
+  margin   : 0 auto 12px;
+}
+
+.empty-state p {
+  font-size    : 16px;
+  margin-bottom: 20px;
+}
+
+/* ============================================================
+   RESPONSIVE — tablettes (< 960px)
+   ============================================================ */
+@media (max-width: 960px) {
+  .list-toolbar {
+    flex-direction: column;
+    align-items   : stretch;
+  }
+
+  .search-field {
+    max-width: 100%;
+  }
+}

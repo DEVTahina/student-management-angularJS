@@ -1,0 +1,181 @@
+<!-- ============================================================
+     EN-TÊTE DE PAGE
+     ============================================================ -->
+<div class="page-header">
+  <div class="page-header__info">
+    <h1 class="page-header__title">
+      <mat-icon>people</mat-icon>
+      Liste des Étudiants
+    </h1>
+    <span class="page-header__count"
+          [matBadge]="totalCount"
+          matBadgeColor="accent"
+          matBadgeOverlap="false">
+      Total
+    </span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CARTE PRINCIPALE
+     ============================================================ -->
+<mat-card class="list-card">
+
+  <!-- Barre d'outils : filtre + bouton ajouter -->
+  <div class="list-toolbar">
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Rechercher un étudiant…</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput
+             (keyup)="applyFilter($event)"
+             placeholder="Matricule, nom, email, niveau…"
+             #searchInput>
+      <button *ngIf="searchInput.value"
+              matSuffix
+              mat-icon-button
+              (click)="searchInput.value=''; dataSource.filter=''"
+              matTooltip="Effacer">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="onAdd()">
+      <mat-icon>person_add</mat-icon>
+      Ajouter un Étudiant
+    </button>
+
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- ============================================================
+       TABLE
+       ============================================================ -->
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort class="students-table">
+
+      <!-- MATRICULE -->
+      <ng-container matColumnDef="matricule">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Matricule</th>
+        <td mat-cell *matCellDef="let s">
+          <span class="chip chip--primary">{{ s.matricule }}</span>
+        </td>
+      </ng-container>
+
+      <!-- NOM -->
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+        <td mat-cell *matCellDef="let s">
+          <strong>{{ s.nom | uppercase }}</strong>
+        </td>
+      </ng-container>
+
+      <!-- PRÉNOMS -->
+      <ng-container matColumnDef="prenoms">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Prénoms</th>
+        <td mat-cell *matCellDef="let s">{{ s.prenoms }}</td>
+      </ng-container>
+
+      <!-- DATE DE NAISSANCE -->
+      <ng-container matColumnDef="dateNaissance">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date naissance</th>
+        <td mat-cell *matCellDef="let s">
+          <span class="date-cell">
+            <mat-icon class="date-icon">cake</mat-icon>
+            {{ s.dateNaissance | date:'dd/MM/yyyy' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- SEXE -->
+      <ng-container matColumnDef="sexe">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sexe</th>
+        <td mat-cell *matCellDef="let s">
+          <mat-icon [style.color]="getSexeColor(s.sexe)"
+                    [matTooltip]="s.sexe">
+            {{ getSexeIcon(s.sexe) }}
+          </mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- NIVEAU -->
+      <ng-container matColumnDef="niveau">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Niveau</th>
+        <td mat-cell *matCellDef="let s">
+          <span class="chip chip--niveau"
+                [style.background]="getNiveauColor(s.niveau)">
+            {{ s.niveau }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- TÉLÉPHONE -->
+      <ng-container matColumnDef="telephone">
+        <th mat-header-cell *matHeaderCellDef>Téléphone</th>
+        <td mat-cell *matCellDef="let s">
+          <span class="phone-cell">
+            <mat-icon class="phone-icon">phone</mat-icon>
+            {{ s.telephone }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- EMAIL -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let s">
+          <a [href]="'mailto:' + s.email" class="email-link">{{ s.email }}</a>
+        </td>
+      </ng-container>
+
+      <!-- ACTIONS -->
+      <ng-container matColumnDef="actions" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef class="actions-header">Actions</th>
+        <td mat-cell *matCellDef="let s" class="actions-cell">
+
+          <button mat-icon-button
+                  color="primary"
+                  (click)="onEdit(s)"
+                  matTooltip="Modifier l'étudiant">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button
+                  color="warn"
+                  (click)="onDelete(s)"
+                  matTooltip="Supprimer l'étudiant">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+        </td>
+      </ng-container>
+
+      <!-- LIGNES -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          class="student-row"></tr>
+
+      <!-- ÉTAT VIDE -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="empty-state" [attr.colspan]="displayedColumns.length">
+          <mat-icon>sentiment_dissatisfied</mat-icon>
+          <p>Aucun étudiant trouvé</p>
+          <button mat-stroked-button color="primary" (click)="onAdd()">
+            <mat-icon>person_add</mat-icon>
+            Ajouter le premier étudiant
+          </button>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+  <!-- PAGINATION -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"
+                 [pageSize]="10"
+                 showFirstLastButtons
+                 aria-label="Pagination des étudiants">
+  </mat-paginator>
+
+</mat-card>
